@@ -70,6 +70,31 @@ namespace LockerApi.Services
             task.Start();
         }
 
+        public static void insertOrUpdate(ConfirmationToken confirmationToken)
+        {
+            using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            {
+                var entity = dbContext.ConfirmationTokens.
+                    SingleOrDefault(ct => ct.User_Id == confirmationToken.User_Id &&
+                    ct.Type == confirmationToken.Type);
+                if (entity != null)
+                {
+                    entity.Token = confirmationToken.Token;
+                    entity.ExpirationDateTime = confirmationToken.ExpirationDateTime;
+                }
+                else
+                {
+                    dbContext.ConfirmationTokens.Add(confirmationToken);
+                    _insertCount++;
+                }
+                dbContext.SaveChanges();
+
+            }
+
+            var task = new Task(cleanUpTable);
+            task.Start();
+        }
+
         public static void update(ConfirmationToken confirmationToken)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())

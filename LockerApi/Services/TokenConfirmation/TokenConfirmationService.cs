@@ -17,26 +17,16 @@ namespace LockerApi.Services
 
         public void sendConfirmationTokenTo(ApplicationUser user, ConfirmationTokenType type)
         {
-            var confirmationToken = ConfirmationTokenRepository.getByUserId(user.Id, type);
             var token = randomString(SettingsService.ConfirmationTokenLength);
             DateTime expirationDateTime = System.DateTime.Now.AddMinutes(SettingsService.ConfirmationTokenDuration);
-            if (confirmationToken != null)
+            var confirmationToken = new ConfirmationToken()
             {
-                confirmationToken.Token = token;
-                confirmationToken.ExpirationDateTime = expirationDateTime;
-                ConfirmationTokenRepository.update(confirmationToken);
-            }
-            else
-            {
-                confirmationToken = new ConfirmationToken
-                {
-                    Token = token,
-                    Type = type,
-                    ExpirationDateTime = expirationDateTime,
-                    User_Id = user.Id
-                };
-                ConfirmationTokenRepository.insert(confirmationToken);
-            }
+                Token = token,
+                Type = type,
+                ExpirationDateTime = expirationDateTime,
+                User_Id = user.Id
+            };
+            ConfirmationTokenRepository.insertOrUpdate(confirmationToken);
             sendConfirmationMessage(user, confirmationToken);
         }
 

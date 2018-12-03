@@ -15,5 +15,19 @@ namespace LockerApi.Models
         public string Hash { get; set; }
         public DateTime CreationDateTime { get; set; }
         public DateTime? ExpirationDateTime { get; set; }
+        public bool IsExpired
+        {
+            get
+            {
+                DateTime expirationDateTime;
+                if (ExpirationDateTime != null)
+                {
+                    expirationDateTime = ExpirationDateTime.Value;
+                    if (DateTime.Now > expirationDateTime)
+                        return true;
+                }
+                return false;
+            }
+        }
     }
 }
