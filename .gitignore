@@ -266,3 +266,4 @@ __pycache__/
 *.pyc
 /LockerApi/Properties/PublishProfiles/securesmartlock - FTP.pubxml
 /LockerApi/Properties/PublishProfiles/securesmartlock - Web Deploy.pubxml
+/LockerApi/MessageHandlers/APIKey.cs

@@ -242,6 +242,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MessageHandlers\APIKey.cs" />
+    <Compile Include="MessageHandlers\APIKeyMessageHandler.cs" />
     <Compile Include="Migrations\201811221139085_InitialMigration.cs" />
     <Compile Include="Migrations\201811221139085_InitialMigration.Designer.cs">
       <DependentUpon>201811221139085_InitialMigration.cs</DependentUpon>
@@ -275,7 +277,7 @@
     <Compile Include="Services\QRCodeService.cs" />
     <Compile Include="Services\Repositories\QRCodeRepository.cs" />
     <Compile Include="Services\HashService.cs" />
-    <Compile Include="Services\TokenConfirmation\TokenConfirmationService.cs" />
+    <Compile Include="Services\TokenConfirmationService.cs" />
     <Compile Include="Libraries\ShortGuid.cs" />
     <Compile Include="Models\BindingModels\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
