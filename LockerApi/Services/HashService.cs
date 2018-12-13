@@ -10,5 +10,15 @@
         {
             return qrCode;
         }
+
+        public static string HashDeviceCode(string deviceCode)
+        {
+            return deviceCode;
+        }
+
+        public static string HashDeviceSecret(string deviceSecret)
+        {
+            return deviceSecret;
+        }
     }
 }

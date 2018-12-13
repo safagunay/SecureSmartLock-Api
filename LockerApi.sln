@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockerApi", "LockerApi\LockerApi.csproj", "{7C298B67-E862-4396-AB9F-7A702F9D225A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockerApi.Test", "LockerApi.Test\LockerApi.Test.csproj", "{97277AB6-E0C8-4138-B296-98A61D83C695}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockerApi.Admin", "LockerApi.Admin\LockerApi.Admin.csproj", "{916DDDDC-D566-4D34-96C7-F8B2510DE573}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{7C298B67-E862-4396-AB9F-7A702F9D225A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C298B67-E862-4396-AB9F-7A702F9D225A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C298B67-E862-4396-AB9F-7A702F9D225A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97277AB6-E0C8-4138-B296-98A61D83C695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97277AB6-E0C8-4138-B296-98A61D83C695}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97277AB6-E0C8-4138-B296-98A61D83C695}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97277AB6-E0C8-4138-B296-98A61D83C695}.Release|Any CPU.Build.0 = Release|Any CPU
+		{916DDDDC-D566-4D34-96C7-F8B2510DE573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{916DDDDC-D566-4D34-96C7-F8B2510DE573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{916DDDDC-D566-4D34-96C7-F8B2510DE573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{916DDDDC-D566-4D34-96C7-F8B2510DE573}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
