@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockerApi", "LockerApi\Lock
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockerApi.Admin", "LockerApi.Admin\LockerApi.Admin.csproj", "{916DDDDC-D566-4D34-96C7-F8B2510DE573}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockerApi.Test", "LockerApi.Test\LockerApi.Test.csproj", "{9512272D-BE6A-459E-A1F0-265CA7D6542D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{916DDDDC-D566-4D34-96C7-F8B2510DE573}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{916DDDDC-D566-4D34-96C7-F8B2510DE573}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{916DDDDC-D566-4D34-96C7-F8B2510DE573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9512272D-BE6A-459E-A1F0-265CA7D6542D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9512272D-BE6A-459E-A1F0-265CA7D6542D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9512272D-BE6A-459E-A1F0-265CA7D6542D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9512272D-BE6A-459E-A1F0-265CA7D6542D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -276,6 +276,7 @@
     <Compile Include="Models\Entities\ConfirmationTokenType.cs" />
     <Compile Include="Models\Entities\QRCode.cs" />
     <Compile Include="Services\QRCodeService.cs" />
+    <Compile Include="Services\Repositories\DeviceRepository.cs" />
     <Compile Include="Services\Repositories\QRCodeRepository.cs" />
     <Compile Include="Services\HashService.cs" />
     <Compile Include="Services\TokenConfirmationService.cs" />

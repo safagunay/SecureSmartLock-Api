@@ -2,10 +2,7 @@
 {
     public static class HashService
     {
-        //public static string hash(string val,HASH)
-        //{
-
-        //}
+        //private readonly static HashAlgorithm h = new MD5CryptoServiceProvider();
         public static string HashQRCode(string qrCode)
         {
             return qrCode;
