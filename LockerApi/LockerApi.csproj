@@ -269,13 +269,36 @@
     <Compile Include="Migrations\201811231155106_QRCodesTableAdded.Designer.cs">
       <DependentUpon>201811231155106_QRCodesTableAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812151812524_DeviceCodeColumnDeletedFromPermissionsTable.cs" />
+    <Compile Include="Migrations\201812151812524_DeviceCodeColumnDeletedFromPermissionsTable.Designer.cs">
+      <DependentUpon>201812151812524_DeviceCodeColumnDeletedFromPermissionsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812151905473_DeleteDateRemovedColumnFromPermissionsTable.cs" />
+    <Compile Include="Migrations\201812151905473_DeleteDateRemovedColumnFromPermissionsTable.Designer.cs">
+      <DependentUpon>201812151905473_DeleteDateRemovedColumnFromPermissionsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812151912333_DevicePermissionRecordsTableAdded.cs" />
+    <Compile Include="Migrations\201812151912333_DevicePermissionRecordsTableAdded.Designer.cs">
+      <DependentUpon>201812151912333_DevicePermissionRecordsTableAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812161350110_DateColumnNamesAndTypesManuallyHandled.cs" />
+    <Compile Include="Migrations\201812161350110_DateColumnNamesAndTypesManuallyHandled.Designer.cs">
+      <DependentUpon>201812161350110_DateColumnNamesAndTypesManuallyHandled.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BindingModels\RegisterDeviceBindingModel.cs" />
     <Compile Include="Models\BindingModels\VerifyQRCodeBindingModel.cs" />
+    <Compile Include="Models\BindingModels\AddPermissionBindingModel.cs" />
+    <Compile Include="Models\DTOs\DeviceDTO.cs" />
     <Compile Include="Models\DTOs\QRCodeDTO.cs" />
     <Compile Include="Models\Entities\ConfirmationToken.cs" />
     <Compile Include="Models\Entities\ConfirmationTokenType.cs" />
+    <Compile Include="Models\Entities\DevicePermissionRecord.cs" />
     <Compile Include="Models\Entities\QRCode.cs" />
+    <Compile Include="Services\DateService.cs" />
+    <Compile Include="Services\DeviceService.cs" />
     <Compile Include="Services\QRCodeService.cs" />
+    <Compile Include="Services\Repositories\DevicePermissionsRepository.cs" />
     <Compile Include="Services\Repositories\DeviceRepository.cs" />
     <Compile Include="Services\Repositories\QRCodeRepository.cs" />
     <Compile Include="Services\HashService.cs" />
@@ -407,6 +430,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811231155106_QRCodesTableAdded.resx">
       <DependentUpon>201811231155106_QRCodesTableAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812151812524_DeviceCodeColumnDeletedFromPermissionsTable.resx">
+      <DependentUpon>201812151812524_DeviceCodeColumnDeletedFromPermissionsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812151905473_DeleteDateRemovedColumnFromPermissionsTable.resx">
+      <DependentUpon>201812151905473_DeleteDateRemovedColumnFromPermissionsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812151912333_DevicePermissionRecordsTableAdded.resx">
+      <DependentUpon>201812151912333_DevicePermissionRecordsTableAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161350110_DateColumnNamesAndTypesManuallyHandled.resx">
+      <DependentUpon>201812161350110_DateColumnNamesAndTypesManuallyHandled.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

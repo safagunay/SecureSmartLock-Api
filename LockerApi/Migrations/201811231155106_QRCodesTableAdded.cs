@@ -13,11 +13,11 @@ namespace LockerApi.Migrations
                     Id = c.Int(nullable: false, identity: true),
                     User_Id = c.String(nullable: false, maxLength: 128),
                     Hash = c.String(nullable: false, maxLength: 500),
-                    CreationDateTime = c.DateTime(nullable: false),
-                    ExpirationDateTime = c.DateTime(),
+                    CreatedOnUTC = c.DateTime(storeType: "smalldatetime", nullable: false),
+                    ExpiresOnUTC = c.DateTime(storeType: "smalldatetime"),
                 })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.User_Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.User_Id, cascadeDelete: true)
                 .Index(t => t.User_Id)
                 .Index(t => t.Hash, unique: true);
 

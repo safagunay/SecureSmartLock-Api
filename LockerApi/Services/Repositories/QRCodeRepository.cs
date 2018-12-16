@@ -13,10 +13,9 @@ namespace LockerApi.Services.Repositories
             if (_insertCount >= SettingsService.QRCodeTableCleanUpPeriod)
                 using (ApplicationDbContext dbContext = new ApplicationDbContext())
                 {
-                    var currentDateTime = System.DateTime.Now;
                     IDbSet<QRCode> table = dbContext.QRCodes;
                     foreach (var entry in table.
-                        Where(qr => qr.ExpirationDateTime < currentDateTime))
+                        Where(qr => DateService.isExpiredUTC(qr.ExpiresOnUTC)))
                     {
                         table.Remove(entry);
                     }
@@ -63,8 +62,8 @@ namespace LockerApi.Services.Repositories
                 if (entity != null)
                 {
                     entity.Hash = qrCode.Hash;
-                    entity.CreationDateTime = qrCode.CreationDateTime;
-                    entity.ExpirationDateTime = qrCode.ExpirationDateTime;
+                    entity.CreatedOnUTC = qrCode.CreatedOnUTC;
+                    entity.ExpiresOnUTC = qrCode.ExpiresOnUTC;
                 }
                 else
                 {

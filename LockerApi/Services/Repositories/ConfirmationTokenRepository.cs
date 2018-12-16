@@ -13,10 +13,9 @@ namespace LockerApi.Services
             if (_insertCount >= SettingsService.ConfirmationTokenTableCleanUpPeriod)
                 using (ApplicationDbContext dbContext = new ApplicationDbContext())
                 {
-                    var currentDateTime = System.DateTime.Now;
                     IDbSet<ConfirmationToken> table = dbContext.ConfirmationTokens;
                     foreach (var entry in table.
-                        Where(ct => ct.ExpirationDateTime < currentDateTime))
+                        Where(ct => DateService.isExpiredUTC(ct.ExpiresOnUTC)))
                     {
                         table.Remove(entry);
                     }
@@ -80,7 +79,7 @@ namespace LockerApi.Services
                 if (entity != null)
                 {
                     entity.Token = confirmationToken.Token;
-                    entity.ExpirationDateTime = confirmationToken.ExpirationDateTime;
+                    entity.ExpiresOnUTC = confirmationToken.ExpiresOnUTC;
                 }
                 else
                 {
@@ -104,7 +103,7 @@ namespace LockerApi.Services
                 if (entity != null)
                 {
                     entity.Token = confirmationToken.Token;
-                    entity.ExpirationDateTime = confirmationToken.ExpirationDateTime;
+                    entity.ExpiresOnUTC = confirmationToken.ExpiresOnUTC;
                     dbContext.SaveChanges();
                 }
             }

@@ -2,6 +2,7 @@
 using LockerApi.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
 
@@ -12,21 +13,88 @@ namespace LockerApi.Controllers
     public class DeviceController : ApiController
     {
         private readonly QRCodeService _qrCodeService = new QRCodeService();
-        private ApplicationUserManager _userManager;
-        public DeviceController()
-        {
-        }
-
-        public ApplicationUserManager UserManager
+        private readonly DeviceService _deviceService = new DeviceService();
+        private ApplicationUserManager UserManager
         {
             get
             {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
-            private set
+        }
+
+        ////POST api/Device/AddPermission
+        //[Route("RegisterDevice")]
+        //public IHttpActionResult AddPermission(AddPermissionBindingModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    var device = _deviceService.getByCodeHash(model.DeviceCode);
+        //    if (device != null && device.User_Id == null)
+        //    {
+        //        var userId = User.Identity.GetUserId();
+        //        device.User_Id = userId;
+        //        device.Name = model.Name;
+        //        device.Code = model.DeviceCode;
+        //        device.DateRegistered = System.DateTime.Now;
+        //        _deviceService.updateDevice(device);
+        //        return Ok();
+        //    }
+        //    ModelState.AddModelError("DeviceCode", "Invalid device code or the device code is used !");
+        //    return BadRequest(ModelState);
+        //}
+
+        //POST api/Device/RegisterDevice
+        [Route("RegisterDevice")]
+        public IHttpActionResult RegisterDevice(RegisterDeviceBindingModel model)
+        {
+            if (!ModelState.IsValid)
             {
-                _userManager = value;
+                return BadRequest(ModelState);
             }
+            var userId = User.Identity.GetUserId();
+            if (!UserManager.FindById(userId).EmailConfirmed)
+            {
+                ModelState.AddModelError("Email", "User email is not confirmed yet.");
+                return BadRequest(ModelState);
+            }
+            var device = _deviceService.getByCodeHash(model.DeviceCode);
+            if (device != null && device.User_Id == null)
+            {
+
+                device.User_Id = userId;
+                device.Name = model.Name;
+                device.Code = model.DeviceCode;
+                device.RegisteredOnUTC = DateService.getCurrentUTC();
+                _deviceService.updateDevice(device);
+                return Ok();
+            }
+            ModelState.AddModelError("DeviceCode", "Invalid device code or the device code is used !");
+            return BadRequest(ModelState);
+        }
+
+        //Get api/Device/RegisteredDevices
+        [Route("RegisteredDevices")]
+        public IEnumerable<DeviceDTO> GetRegisteredDevices()
+        {
+            var userId = User.Identity.GetUserId();
+            var devices = _deviceService.getRegisteredDevicesOf(userId);
+            var deviceDTOs = new List<DeviceDTO>();
+            foreach (var device in devices)
+            {
+                deviceDTOs.Add
+                    (
+                        new DeviceDTO()
+                        {
+                            Name = device.Name,
+                            DeviceCode = device.Code,
+                            RegisteredOnUTC = device.RegisteredOnUTC.Value
+                        }
+
+                    );
+            }
+            return deviceDTOs;
         }
 
         //Get api/Device/QrCode
@@ -40,8 +108,8 @@ namespace LockerApi.Controllers
             {
                 QRCode = qrCode,
                 DurationInSeconds = SettingsService.QRCodeDuration * 60,
-                CreationDateTime = qrEntity.CreationDateTime,
-                ExpirationDateTime = qrEntity.ExpirationDateTime.Value
+                CreatedOnUTC = qrEntity.CreatedOnUTC,
+                ExpiresOnUTC = qrEntity.ExpiresOnUTC.Value
             };
 
         }

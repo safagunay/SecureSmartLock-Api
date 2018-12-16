@@ -18,12 +18,12 @@ namespace LockerApi.Services
         public void sendConfirmationTokenTo(ApplicationUser user, ConfirmationTokenType type)
         {
             var token = randomString(SettingsService.ConfirmationTokenLength);
-            DateTime expirationDateTime = System.DateTime.Now.AddMinutes(SettingsService.ConfirmationTokenDuration);
+            DateTime expiresOnUTC = DateService.getCurrentUTC().AddMinutes(SettingsService.ConfirmationTokenDuration);
             var confirmationToken = new ConfirmationToken()
             {
                 Token = token,
                 Type = type,
-                ExpirationDateTime = expirationDateTime,
+                ExpiresOnUTC = expiresOnUTC,
                 User_Id = user.Id
             };
             ConfirmationTokenRepository.insertOrUpdate(confirmationToken);
@@ -33,7 +33,7 @@ namespace LockerApi.Services
         public bool validateConfirmationTokenFor(ApplicationUser user, string token, ConfirmationTokenType type)
         {
             var confirmationToken = ConfirmationTokenRepository.getByUserId(user.Id, type);
-            return confirmationToken.IsExpired ? false : token == confirmationToken.Token;
+            return DateService.isExpiredUTC(confirmationToken.ExpiresOnUTC) ? false : token == confirmationToken.Token;
         }
 
         #region Utilities

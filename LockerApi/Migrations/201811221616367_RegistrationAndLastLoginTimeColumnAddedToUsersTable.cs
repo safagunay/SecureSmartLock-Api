@@ -6,14 +6,14 @@ namespace LockerApi.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.AspNetUsers", "RegistrationDateTime", c => c.DateTime(nullable: false));
-            AddColumn("dbo.AspNetUsers", "LastLoginDateTime", c => c.DateTime(nullable: false));
+            AddColumn("dbo.AspNetUsers", "RegisteredOnUTC", c => c.DateTime(storeType: "smalldatetime", nullable: false));
+            AddColumn("dbo.AspNetUsers", "LastLoginUTC", c => c.DateTime(storeType: "smalldatetime", nullable: false));
         }
 
         public override void Down()
         {
-            DropColumn("dbo.AspNetUsers", "LastLoginDateTime");
-            DropColumn("dbo.AspNetUsers", "RegistrationDateTime");
+            DropColumn("dbo.AspNetUsers", "LastLoginUTC");
+            DropColumn("dbo.AspNetUsers", "RegisteredOnUTC");
         }
     }
 }

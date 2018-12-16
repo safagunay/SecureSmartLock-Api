@@ -12,12 +12,12 @@ namespace LockerApi.Migrations
                 {
                     Id = c.Int(nullable: false, identity: true),
                     Token = c.String(nullable: false, maxLength: 1000),
-                    ExpirationDateTime = c.DateTime(),
+                    ExpiresOnUTC = c.DateTime(storeType: "smalldatetime"),
                     User_Id = c.String(maxLength: 128),
                     Type = c.Int(nullable: false),
                 })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.User_Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.User_Id, cascadeDelete: true)
                 .Index(t => t.User_Id);
 
         }

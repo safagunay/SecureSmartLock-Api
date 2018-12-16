@@ -6,7 +6,7 @@ namespace LockerApi.Models
     {
         public string QRCode { get; set; }
         public int DurationInSeconds { get; set; }
-        public DateTime ExpirationDateTime { get; set; }
-        public DateTime CreationDateTime { get; set; }
+        public DateTime ExpiresOnUTC { get; set; }
+        public DateTime CreatedOnUTC { get; set; }
     }
 }

@@ -14,6 +14,17 @@ namespace LockerApi.Services.Repositories
             }
         }
 
+        public static Device getByCode(string code)
+        {
+            if (code == null)
+                return null;
+            using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            {
+                return dbContext.Devices.
+                    Where(dv => dv.CodeHash == code).SingleOrDefault();
+            }
+        }
+
         public static Device getByCodeHash(string codeHash)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
@@ -36,7 +47,8 @@ namespace LockerApi.Services.Repositories
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {
-                return dbContext.Devices.Where(dv => dv.User_Id == userId);
+                return dbContext.Devices.Where(dv => dv.User_Id == userId)
+                    .ToList();
             }
         }
 
@@ -68,10 +80,11 @@ namespace LockerApi.Services.Repositories
                 entity.Name = device.Name;
                 entity.SecretKeyHash = device.SecretKeyHash;
                 entity.User_Id = device.User_Id;
+                entity.Code = device.Code;
                 entity.CodeHash = device.CodeHash;
                 entity.SecretKeyHash = device.SecretKeyHash;
-                entity.DateCreated = device.DateCreated;
-                entity.DateRegistered = device.DateRegistered;
+                entity.CreatedOnUTC = device.CreatedOnUTC;
+                entity.RegisteredOnUTC = device.RegisteredOnUTC;
                 dbContext.SaveChanges();
             }
         }

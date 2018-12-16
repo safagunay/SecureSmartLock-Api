@@ -19,5 +19,7 @@ namespace LockerApi.Models
         public virtual IDbSet<DevicePermission> DevicePermissions { get; set; }
         public virtual IDbSet<ConfirmationToken> ConfirmationTokens { get; set; }
         public virtual IDbSet<QRCode> QRCodes { get; set; }
+        public virtual IDbSet<DevicePermissionRecord> DevicePermissionRecords { get; set; }
+
     }
 }

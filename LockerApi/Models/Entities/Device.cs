@@ -21,13 +21,13 @@ namespace LockerApi.Models
         [StringLength(128)]
         public string User_Id { get; set; }
         public bool IsDeleted { get; set; } = false;
-        public DateTime? DateRegistered { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateTime? RegisteredOnUTC { get; set; }
+        public DateTime CreatedOnUTC { get; set; }
         public bool IsRegistered
         {
             get
             {
-                return DateRegistered != null;
+                return RegisteredOnUTC != null;
             }
         }
     }

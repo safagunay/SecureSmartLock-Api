@@ -21,9 +21,9 @@ namespace LockerApi.Controllers
         private readonly TokenConfirmationService _tokenConfirmationService = new TokenConfirmationService();
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
-
         public AccountController()
         {
+
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -456,7 +456,7 @@ namespace LockerApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var currentDateTime = DateTime.Now;
+            var currentUTC = DateService.getCurrentUTC();
             var user = new ApplicationUser()
             {
                 UserName = model.Email,
@@ -464,8 +464,8 @@ namespace LockerApi.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
-                RegistrationDateTime = currentDateTime,
-                LastLoginDateTime = currentDateTime
+                RegisteredOnUTC = currentUTC,
+                LastLoginUTC = currentUTC
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);

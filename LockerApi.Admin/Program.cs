@@ -1,5 +1,6 @@
 using LockerApi.Admin;
 using LockerApi.Libraries;
+using LockerApi.Services;
 using System;
 using System.IO;
 
@@ -19,7 +20,7 @@ namespace LockerApi.Test
 
             int id = DbQuery.AddNewDevice(deviceCode, deviceSecret);
             string line = String.Format("id={0}, deviceCode={1}, deviceSecret={2}, Date={3}",
-                id, deviceCode, deviceSecret, System.DateTime.Now);
+                id, deviceCode, deviceSecret, DateService.getCurrentUTC());
             using (StreamWriter outputFile = new StreamWriter(path, true))
             {
                 outputFile.WriteLine(line);
@@ -29,7 +30,10 @@ namespace LockerApi.Test
         }
         static void Main(string[] args)
         {
-            AddNewDevice();
+            for (int i = 0; i < 2; i++)
+            {
+                AddNewDevice();
+            }
         }
 
     }

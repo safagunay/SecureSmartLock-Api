@@ -15,8 +15,8 @@ namespace LockerApi.Services
             var duration = SettingsService.QRCodeDuration;
             var qrEntity = new QRCode()
             {
-                CreationDateTime = System.DateTime.Now,
-                ExpirationDateTime = System.DateTime.Now.AddMinutes(duration),
+                CreatedOnUTC = DateService.getCurrentUTC(),
+                ExpiresOnUTC = DateService.getCurrentUTC().AddMinutes(duration),
                 Hash = HashService.HashQRCode(qrCode),
                 User_Id = userId
 
@@ -29,7 +29,7 @@ namespace LockerApi.Services
         {
             var qr = QRCodeRepository.getByUserId(userId);
             return qr != null ?
-                !qr.IsExpired && HashService.HashQRCode(qrCode) == qr.Hash :
+                !DateService.isExpiredUTC(qr.ExpiresOnUTC) && HashService.HashQRCode(qrCode) == qr.Hash :
                 false;
         }
     }

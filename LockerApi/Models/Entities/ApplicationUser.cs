@@ -9,7 +9,7 @@ namespace LockerApi.Models
         public string FirstName { get; set; }
         [StringLength(50)]
         public string LastName { get; set; }
-        public DateTime RegistrationDateTime { get; set; }
-        public DateTime LastLoginDateTime { get; set; }
+        public DateTime RegisteredOnUTC { get; set; }
+        public DateTime LastLoginUTC { get; set; }
     }
 }

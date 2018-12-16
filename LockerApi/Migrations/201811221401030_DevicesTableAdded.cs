@@ -17,8 +17,8 @@ namespace LockerApi.Migrations
                     SecretKeyHash = c.String(nullable: false, maxLength: 250),
                     User_Id = c.String(maxLength: 128),
                     IsDeleted = c.Boolean(nullable: false),
-                    DateRegistered = c.DateTime(),
-                    DateCreated = c.DateTime(nullable: false),
+                    RegisteredOnUTC = c.DateTime(storeType: "smalldatetime"),
+                    CreatedOnUTC = c.DateTime(storeType: "smalldatetime", nullable: false),
                 })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.User_Id)

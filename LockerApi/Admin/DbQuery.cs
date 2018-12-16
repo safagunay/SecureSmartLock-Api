@@ -13,8 +13,8 @@ namespace LockerApi.Admin
                 {
                     Code = null,
                     CodeHash = HashService.HashDeviceCode(deviceCode),
-                    DateCreated = System.DateTime.Now,
-                    DateRegistered = null,
+                    CreatedOnUTC = DateService.getCurrentUTC(),
+                    RegisteredOnUTC = null,
                     IsDeleted = false,
                     Name = null,
                     SecretKeyHash = HashService.HashDeviceSecret(deviceSecret),

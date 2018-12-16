@@ -2,23 +2,22 @@ namespace LockerApi.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    public partial class DevicePermissionsTableAdded : DbMigration
+    public partial class DevicePermissionRecordsTableAdded : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.DevicePermissions",
+                "dbo.DevicePermissionRecords",
                 c => new
                 {
                     Id = c.Int(nullable: false, identity: true),
                     Device_Id = c.Int(nullable: false),
-                    DeviceCode = c.String(nullable: false, maxLength: 50),
-                    Name = c.String(maxLength: 50),
+                    Description = c.String(maxLength: 100),
                     User_Id = c.String(nullable: false, maxLength: 128),
                     Givenby_User_Id = c.String(nullable: false, maxLength: 128),
-                    ExpiresOnUTC = c.DateTime(storeType: "smalldatetime"),
-                    CreatedOnUTC = c.DateTime(storeType: "smalldatetime", nullable: false),
-                    DateRemoved = c.DateTime(storeType: "smalldatetime"),
+                    ExpirationDate = c.DateTime(storeType: "smalldatetime"),
+                    CreationDate = c.DateTime(storeType: "smalldatetime", nullable: false),
+                    DateRemoved = c.DateTime(storeType: "smalldatetime", nullable: false),
                 })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Devices", t => t.Device_Id)
@@ -27,17 +26,16 @@ namespace LockerApi.Migrations
                 .Index(t => t.User_Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.Givenby_User_Id);
 
-
         }
 
         public override void Down()
         {
-            DropForeignKey("dbo.DevicePermissions", "Device_Id", "dbo.Devices");
+            DropForeignKey("dbo.DevicePermissionRecords", "Device_Id", "dbo.Devices");
             DropIndex("dbo.Devices", new[] { "Device_Id" });
-            DropForeignKey("dbo.DevicePermissions", "User_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.DevicePermissionRecords", "User_Id", "dbo.AspNetUsers");
             DropIndex("dbo.Devices", new[] { "User_Id" });
-            DropForeignKey("dbo.DevicePermissions", "Givenby_User_Id", "dbo.AspNetUsers");
-            DropTable("dbo.DevicePermissions");
+            DropForeignKey("dbo.DevicePermissionRecords", "Givenby_User_Id", "dbo.AspNetUsers");
+            DropTable("dbo.DevicePermissionRecords");
         }
     }
 }

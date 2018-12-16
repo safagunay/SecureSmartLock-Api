@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LockerApi.Models
 {
-    public class DevicePermission
+    public class DevicePermissionRecord
     {
         public int Id { get; set; }
         [Required]
@@ -19,5 +19,7 @@ namespace LockerApi.Models
         public string Givenby_User_Id { get; set; }
         public DateTime? ExpiresOnUTC { get; set; }
         public DateTime CreatedOnUTC { get; set; }
+        public DateTime RemovedOnUTC { get; set; }
+
     }
 }
