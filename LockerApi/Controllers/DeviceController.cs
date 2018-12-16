@@ -70,7 +70,26 @@ namespace LockerApi.Controllers
                 _deviceService.updateDevice(device);
                 return Ok();
             }
-            ModelState.AddModelError("DeviceCode", "Invalid device code or the device code is used !");
+            ModelState.AddModelError("DeviceCode", "Invalid device code.");
+            return BadRequest(ModelState);
+        }
+
+        //POST api/Device/UpdateDeviceName
+        [Route("UpdateDeviceName")]
+        public IHttpActionResult UpdateDeviceName(UpdateDeviceNameBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var userId = User.Identity.GetUserId();
+            var device = _deviceService.getByCode(model.DeviceCode);
+            if (device != null && device.User_Id == userId)
+            {
+                _deviceService.updateDeviceName(device.Id, model.Name);
+                return Ok();
+            }
+            ModelState.AddModelError("DeviceCode", "Invalid device code.");
             return BadRequest(ModelState);
         }
 

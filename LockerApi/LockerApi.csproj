@@ -287,6 +287,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BindingModels\RegisterDeviceBindingModel.cs" />
+    <Compile Include="Models\BindingModels\UpdateDeviceNameBindingModel.cs" />
     <Compile Include="Models\BindingModels\VerifyQRCodeBindingModel.cs" />
     <Compile Include="Models\BindingModels\AddPermissionBindingModel.cs" />
     <Compile Include="Models\DTOs\DeviceDTO.cs" />

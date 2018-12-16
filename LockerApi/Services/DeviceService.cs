@@ -17,11 +17,15 @@ namespace LockerApi.Services
                 HashService.HashDeviceCode(code));
         }
 
+        public void updateDeviceName(int deviceId, string name)
+        {
+            DeviceRepository.setName(deviceId, name);
+        }
+
         public void updateDevice(Device device)
         {
             DeviceRepository.update(device);
         }
-
         public IEnumerable<Device> getRegisteredDevicesOf(string userId)
         {
             return DeviceRepository.getByUserId(userId);

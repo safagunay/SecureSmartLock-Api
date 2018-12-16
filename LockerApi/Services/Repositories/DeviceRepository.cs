@@ -21,7 +21,7 @@ namespace LockerApi.Services.Repositories
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {
                 return dbContext.Devices.
-                    Where(dv => dv.CodeHash == code).SingleOrDefault();
+                    Where(dv => dv.Code == code).SingleOrDefault();
             }
         }
 
