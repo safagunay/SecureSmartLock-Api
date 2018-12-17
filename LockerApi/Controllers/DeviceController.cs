@@ -22,29 +22,6 @@ namespace LockerApi.Controllers
             }
         }
 
-        ////POST api/Device/AddPermission
-        //[Route("RegisterDevice")]
-        //public IHttpActionResult AddPermission(AddPermissionBindingModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-        //    var device = _deviceService.getByCodeHash(model.DeviceCode);
-        //    if (device != null && device.User_Id == null)
-        //    {
-        //        var userId = User.Identity.GetUserId();
-        //        device.User_Id = userId;
-        //        device.Name = model.Name;
-        //        device.Code = model.DeviceCode;
-        //        device.DateRegistered = System.DateTime.Now;
-        //        _deviceService.updateDevice(device);
-        //        return Ok();
-        //    }
-        //    ModelState.AddModelError("DeviceCode", "Invalid device code or the device code is used !");
-        //    return BadRequest(ModelState);
-        //}
-
         //POST api/Device/RegisterDevice
         [Route("RegisterDevice")]
         public IHttpActionResult RegisterDevice(RegisterDeviceBindingModel model)
@@ -147,6 +124,7 @@ namespace LockerApi.Controllers
             ModelState.AddModelError("QRCode", "Invalid QR code or the QR code has expired.");
             return BadRequest(ModelState);
         }
+
     }
 
 }
