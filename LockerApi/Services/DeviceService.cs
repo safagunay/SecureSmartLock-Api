@@ -31,5 +31,24 @@ namespace LockerApi.Services
             return DeviceRepository.getByUserId(userId);
         }
 
+        public void AddOrUpdatePermission(DevicePermission permission)
+        {
+            DevicePermissionsRepository.InsertOrUpdate(permission);
+        }
+
+        public void AddPermissionRecord(DevicePermissionRecord record)
+        {
+            DevicePermissionsRepository.InsertPermissionRecord(record);
+        }
+
+        public DevicePermission DeletePermission(int deviceId, string userId)
+        {
+            return DevicePermissionsRepository.Delete(deviceId, userId);
+        }
+
+        public IEnumerable<DevicePermission> getDevicePermissionList(int deviceId)
+        {
+            return DevicePermissionsRepository.GetByDeviceId(deviceId);
+        }
     }
 }

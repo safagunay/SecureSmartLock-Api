@@ -238,6 +238,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DeviceController.cs" />
+    <Compile Include="Controllers\DeviceController_1.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DbContext\ApplicationDbContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -286,6 +287,9 @@
       <DependentUpon>201812161350110_DateColumnNamesAndTypesManuallyHandled.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BindingModels\DeletePermissionBindingModel.cs" />
+    <Compile Include="Models\DTOs\DevicePermissionDTO.cs" />
+    <Compile Include="Models\BindingModels\GetPermissionListModel.cs" />
     <Compile Include="Models\BindingModels\RegisterDeviceBindingModel.cs" />
     <Compile Include="Models\BindingModels\UpdateDeviceNameBindingModel.cs" />
     <Compile Include="Models\BindingModels\VerifyQRCodeBindingModel.cs" />

@@ -2,11 +2,13 @@
 
 namespace LockerApi.Models
 {
-    public class RegisterDeviceBindingModel
+    public class DeletePermissionBindingModel
     {
-        [StringLength(50)]
         [Required]
-        public string Name { get; set; }
+        [StringLength(256)]
+        [Display(Name = "Email")]
+        [EmailAddress]
+        public string Email { get; set; }
         [StringLength(50)]
         [Required]
         public string DeviceCode { get; set; }

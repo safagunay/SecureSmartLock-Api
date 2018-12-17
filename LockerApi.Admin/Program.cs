@@ -30,7 +30,7 @@ namespace LockerApi.Test
         }
         static void Main(string[] args)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 47; i++)
             {
                 AddNewDevice();
             }

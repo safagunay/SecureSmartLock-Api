@@ -7,7 +7,7 @@ namespace LockerApi.Services.Repositories
     public static class DevicePermissionsRepository
     {
 
-        public static DevicePermission getById(int id)
+        public static DevicePermission GetById(int id)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {
@@ -15,7 +15,7 @@ namespace LockerApi.Services.Repositories
             }
         }
 
-        public static DevicePermission getByDeviceAndUserId(int deviceId, string userId)
+        public static DevicePermission GetByDeviceAndUserId(int deviceId, string userId)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {
@@ -26,56 +26,69 @@ namespace LockerApi.Services.Repositories
             }
         }
 
-        public static IEnumerable<DevicePermission> getByDeviceId(int deviceId)
+        public static IEnumerable<DevicePermission> GetByDeviceId(int deviceId)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {
-                return dbContext.DevicePermissions.Where(dp => dp.Device_Id == deviceId);
+                return dbContext.DevicePermissions.
+                    Where(dp => dp.Device_Id == deviceId).
+                    ToList();
             }
         }
 
-        public static IEnumerable<DevicePermission> getByUserId(string userId)
+        public static void InsertPermissionRecord(DevicePermissionRecord record)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {
-                return dbContext.DevicePermissions.Where(dp => dp.User_Id == userId);
-            }
-        }
-
-        public static void insert(DevicePermission devicePermission)
-        {
-            using (ApplicationDbContext dbContext = new ApplicationDbContext())
-            {
-                dbContext.DevicePermissions.Add(devicePermission);
+                dbContext.DevicePermissionRecords.Add(record);
                 dbContext.SaveChanges();
             }
         }
 
-        public static void setDescription(int deviceId, string userId, string description)
+        public static IEnumerable<DevicePermission> GetByUserId(string userId)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {
-                var entity = dbContext.DevicePermissions.Where(
-                    dp => dp.Device_Id == deviceId && dp.User_Id == userId)
-                    .SingleOrDefault();
-                entity.Description = description;
+                return dbContext.DevicePermissions.Where(dp => dp.User_Id == userId)
+                    .ToList();
+            }
+        }
+
+        public static void InsertOrUpdate(DevicePermission devicePermission)
+        {
+            using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            {
+                var entity = dbContext.DevicePermissions.Where(dp =>
+                   dp.User_Id == devicePermission.User_Id &&
+                   dp.Device_Id == devicePermission.Device_Id
+                    ).SingleOrDefault();
+                if (entity != null)
+                {
+                    entity.Description = devicePermission.Description;
+                    entity.ExpiresOnUTC = devicePermission.ExpiresOnUTC;
+                }
+                else
+                    dbContext.DevicePermissions.Add(devicePermission);
                 dbContext.SaveChanges();
             }
         }
 
-        public static void Delete(int deviceId, string userId)
+        public static DevicePermission Delete(int deviceId, string userId)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {
                 var entity = dbContext.DevicePermissions.Where(
                     dp => dp.Device_Id == deviceId && dp.User_Id == userId).
                     SingleOrDefault();
+                if (entity == null)
+                    return null;
                 dbContext.DevicePermissions.Remove(entity);
                 dbContext.SaveChanges();
+                return entity;
             }
         }
 
-        public static void update(DevicePermission devicePermission)
+        public static void Update(DevicePermission devicePermission)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {

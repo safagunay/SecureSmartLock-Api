@@ -2,11 +2,8 @@
 
 namespace LockerApi.Models
 {
-    public class RegisterDeviceBindingModel
+    public class GetPermissionListModel
     {
-        [StringLength(50)]
-        [Required]
-        public string Name { get; set; }
         [StringLength(50)]
         [Required]
         public string DeviceCode { get; set; }
