@@ -201,7 +201,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AddDeviceBindingModel.cs" />
+    <Compile Include="Admin\AdminController.cs" />
+    <Compile Include="Admin\AdminSettings.cs" />
     <Compile Include="Admin\DbQuery.cs" />
+    <Compile Include="Admin\DeviceListBindingModel.cs" />
+    <Compile Include="Admin\GetDeviceBindingModel.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />

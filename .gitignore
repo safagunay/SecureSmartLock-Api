@@ -269,3 +269,4 @@ __pycache__/
 /LockerApi/MessageHandlers/APIKey.cs
 /LockerApi.Admin/App.config
 /LockerApi.Test/App.config
+/LockerApi/Admin/AdminSettings.cs
