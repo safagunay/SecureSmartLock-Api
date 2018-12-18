@@ -16,9 +16,14 @@ namespace LockerApi.Services
 
         public static bool isExpiredUTC(DateTime? dateTime)
         {
-            if (dateTime.Value == null)
+            if (!dateTime.HasValue)
                 return false;
             return getCurrentUTC() > dateTime.Value;
+        }
+
+        public static bool isExpiredUTC(DateTime dateTime)
+        {
+            return getCurrentUTC() > dateTime;
         }
     }
 }

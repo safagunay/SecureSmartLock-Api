@@ -21,7 +21,14 @@ namespace LockerApi.Controllers
             }
         }
 
-        //POST api/Device/AddDevice
+        //GET api/Admin/GetServerDateTimeUTC
+        [Route("ServerDateTimeUTC")]
+        public IHttpActionResult GetServerDateTimeUTC()
+        {
+            return Ok(DateService.getCurrentUTC());
+        }
+
+        //POST api/Admin/AddDevice
         [Route("AddDevice")]
         public IHttpActionResult AddDevice(AddDeviceBindingModel model)
         {
@@ -59,7 +66,7 @@ namespace LockerApi.Controllers
             return BadRequest(ModelState);
         }
 
-        //POST api/Device/Device
+        //POST api/Admin/Device
         [Route("Device")]
         public IHttpActionResult Device(GetDeviceBindingModel model)
         {
@@ -88,7 +95,7 @@ namespace LockerApi.Controllers
             return BadRequest(ModelState);
         }
 
-        //POST api/Device/DeviceList
+        //POST api/Admin/DeviceList
         [Route("DeviceList")]
         public IEnumerable<string> DeviceList(DeviceListBindingModel model)
         {

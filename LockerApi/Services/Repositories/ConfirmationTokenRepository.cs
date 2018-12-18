@@ -8,20 +8,20 @@ namespace LockerApi.Services
     public static class ConfirmationTokenRepository
     {
         private static int _insertCount = 0;
+
         private static void cleanUpTable()
         {
-            if (_insertCount >= SettingsService.ConfirmationTokenTableCleanUpPeriod)
-                using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            {
+                IDbSet<ConfirmationToken> table = dbContext.ConfirmationTokens;
+                foreach (var entry in table)
                 {
-                    IDbSet<ConfirmationToken> table = dbContext.ConfirmationTokens;
-                    foreach (var entry in table.
-                        Where(ct => DateService.isExpiredUTC(ct.ExpiresOnUTC)))
-                    {
+                    if (DateService.isExpiredUTC(entry.ExpiresOnUTC))
                         table.Remove(entry);
-                    }
-                    dbContext.SaveChanges();
-                    _insertCount = 0;
                 }
+                dbContext.SaveChanges();
+                _insertCount = 0;
+            }
         }
 
         public static bool deleteByUserId(string userId, ConfirmationTokenType type)
@@ -87,11 +87,13 @@ namespace LockerApi.Services
                     _insertCount++;
                 }
                 dbContext.SaveChanges();
-
+                if (_insertCount >= SettingsService.ConfirmationTokenTableCleanUpPeriod)
+                {
+                    var task = new Task(cleanUpTable);
+                    task.Start();
+                }
             }
 
-            var task = new Task(cleanUpTable);
-            task.Start();
         }
 
         public static void update(ConfirmationToken confirmationToken)

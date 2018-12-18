@@ -1,11 +1,56 @@
 ﻿using LockerApi.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LockerApi.Services.Repositories
 {
     public static class DevicePermissionsRepository
     {
+        private static int _insertCount = 0;
+
+        private static void cleanUpTable()
+        {
+            using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            {
+                IDbSet<DevicePermission> table = dbContext.DevicePermissions;
+                //IDbSet<DevicePermissionRecord> tableRecord = dbContext.DevicePermissionRecords;
+                foreach (var entry in table)
+                {
+                    if (DateService.isExpiredUTC(entry.ExpiresOnUTC))
+                        table.Remove(entry);
+                    //tableRecord.Add(new DevicePermissionRecord()
+                    //{
+                    //    CreatedOnUTC = dp.CreatedOnUTC,
+                    //    Description = dp.Description,
+                    //    Device_Id = dp.Device_Id,
+                    //    ExpiresOnUTC = dp.ExpiresOnUTC,
+                    //    RemovedOnUTC = DateService.getCurrentUTC(),
+                    //    Givenby_User_Id = dp.Givenby_User_Id,
+                    //    User_Id = dp.User_Id
+                    //});
+                }
+                dbContext.SaveChanges();
+                _insertCount = 0;
+            }
+        }
+
+        //private static void insertPermissionRecord(DevicePermission permission)
+        //{
+        //    _deviceService.AddPermissionRecord(
+        //        new DevicePermissionRecord()
+        //        {
+        //            CreatedOnUTC = permission.CreatedOnUTC,
+        //            Description = permission.Description,
+        //            Device_Id = permission.Device_Id,
+        //            ExpiresOnUTC = permission.ExpiresOnUTC,
+        //            RemovedOnUTC = DateService.getCurrentUTC(),
+        //            Givenby_User_Id = permission.Givenby_User_Id,
+        //            User_Id = permission.User_Id
+        //        }
+        //        );
+        //}
 
         public static DevicePermission GetById(int id)
         {
@@ -64,12 +109,22 @@ namespace LockerApi.Services.Repositories
                     ).SingleOrDefault();
                 if (entity != null)
                 {
+                    //if(DateService.isExpiredUTC(entity.ExpiresOnUTC))
                     entity.Description = devicePermission.Description;
                     entity.ExpiresOnUTC = devicePermission.ExpiresOnUTC;
                 }
                 else
+                {
                     dbContext.DevicePermissions.Add(devicePermission);
+                    _insertCount++;
+                }
                 dbContext.SaveChanges();
+                if (_insertCount >= SettingsService.DevicePermissionsTableCleanUpPeriod)
+                {
+                    var task = new Task(cleanUpTable);
+                    task.Start();
+                }
+
             }
         }
 

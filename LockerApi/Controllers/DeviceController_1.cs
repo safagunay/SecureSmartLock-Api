@@ -2,7 +2,6 @@
 using LockerApi.Services;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace LockerApi.Controllers
@@ -50,84 +49,71 @@ namespace LockerApi.Controllers
             return BadRequest(ModelState);
         }
 
-        //Get api/Device/PermissionList
+        //POST api/Device/PermissionList
         [Route("PermissionList")]
-        [HttpGet]
-        public IEnumerable<DevicePermissionDTO> GetPermissionList(GetPermissionListModel model)
+        public IHttpActionResult PermissionList(PermissionListBindingModel model)
         {
-            var devicePermissionDTOs = new List<DevicePermissionDTO>();
             if (!ModelState.IsValid)
-                return devicePermissionDTOs;
+                return BadRequest(ModelState);
             var userId = User.Identity.GetUserId();
             var device = _deviceService.getByCode(model.DeviceCode);
-            if (device != null && device.User_Id == userId)
-                foreach (var permission in _deviceService.getDevicePermissionList(device.Id))
-                {
-                    var email = UserManager.FindById(permission.User_Id).Email;
-                    devicePermissionDTOs.Add
-                        (
-                            new DevicePermissionDTO()
-                            {
-                                Email = email,
-                                Description = permission.Description,
-                                CreatedOnUTC = permission.CreatedOnUTC,
-                                ExpiresOnUTC = permission.ExpiresOnUTC.Value
-                            }
+            if (device == null || device.User_Id != userId)
+            {
+                ModelState.AddModelError("DeviceCode", "Invalid device code.");
+                return BadRequest(ModelState);
+            }
+            var devicePermissionDTOs = new List<DevicePermissionDTO>();
+            foreach (var permission in _deviceService.getDevicePermissionList(device.Id))
+            {
+                if (DateService.isExpiredUTC(permission.ExpiresOnUTC))
+                    continue;
+                var email = UserManager.FindById(permission.User_Id).Email;
+                devicePermissionDTOs.Add
+                    (
+                        new DevicePermissionDTO()
+                        {
+                            Email = email,
+                            Description = permission.Description,
+                            CreatedOnUTC = permission.CreatedOnUTC,
+                            ExpiresOnUTC = permission.ExpiresOnUTC
+                        }
 
-                        );
-                }
-            return devicePermissionDTOs;
+                    );
+            }
+            return Ok(devicePermissionDTOs);
         }
 
         //POST api/Device/DeletePermission
-        [Route("AddPermission")]
+        [Route("DeletePermission")]
         public IHttpActionResult DeletePermission(DeletePermissionBindingModel model)
         {
+            //Model check
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
             var userId = User.Identity.GetUserId();
             var device = _deviceService.getByCode(model.DeviceCode);
-            if (device != null && device.User_Id == userId)
+            if (device == null || device.User_Id != userId)
             {
-                var userToPermit = UserManager.FindByEmail(model.Email);
-                if (userToPermit != null && userToPermit.Id != userId && userToPermit.EmailConfirmed)
-                {
-
-                    var permission = _deviceService.DeletePermission(device.Id, userToPermit.Id);
-                    if (permission != null)
-                    {
-                        var task = new Task(() => insertPermissionRecord(permission));
-                        task.Start();
-                        return Ok();
-                    }
-                }
-
+                ModelState.AddModelError("DeviceCode", "Invalid device code.");
+                return BadRequest(ModelState);
+            }
+            var userToPermit = UserManager.FindByEmail(model.Email);
+            if (userToPermit == null || userToPermit.Id == userId || !userToPermit.EmailConfirmed)
+            {
                 ModelState.AddModelError("Email", "Invalid user email.");
                 return BadRequest(ModelState);
             }
-            ModelState.AddModelError("DeviceCode", "Invalid device code.");
-            return BadRequest(ModelState);
+
+            //Delete permission
+            var permission = _deviceService.DeletePermission(device.Id, userToPermit.Id);
+            if (permission == null)
+            {
+                ModelState.AddModelError("PermissionNotFound", "No such permission found.");
+                return BadRequest(ModelState);
+            }
+            return Ok();
         }
 
 
-
-
-        private void insertPermissionRecord(DevicePermission permission)
-        {
-            _deviceService.AddPermissionRecord(
-                new DevicePermissionRecord()
-                {
-                    CreatedOnUTC = permission.CreatedOnUTC,
-                    Description = permission.Description,
-                    Device_Id = permission.Device_Id,
-                    ExpiresOnUTC = permission.ExpiresOnUTC,
-                    RemovedOnUTC = DateService.getCurrentUTC(),
-                    Givenby_User_Id = permission.Givenby_User_Id,
-                    User_Id = permission.User_Id
-                }
-                );
-        }
     }
 }

@@ -1,29 +1,10 @@
 ﻿using LockerApi.Models;
-using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LockerApi.Services.Repositories
 {
     public static class QRCodeRepository
     {
-        private static int _insertCount = 0;
-        private static void cleanUpTable()
-        {
-            if (_insertCount >= SettingsService.QRCodeTableCleanUpPeriod)
-                using (ApplicationDbContext dbContext = new ApplicationDbContext())
-                {
-                    IDbSet<QRCode> table = dbContext.QRCodes;
-                    foreach (var entry in table.
-                        Where(qr => DateService.isExpiredUTC(qr.ExpiresOnUTC)))
-                    {
-                        table.Remove(entry);
-                    }
-                    dbContext.SaveChanges();
-                    _insertCount = 0;
-                }
-        }
-
         public static QRCode getById(int id)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
@@ -48,9 +29,6 @@ namespace LockerApi.Services.Repositories
                 dbContext.QRCodes.Add(qrCode);
                 dbContext.SaveChanges();
             }
-            _insertCount++;
-            var task = new Task(cleanUpTable);
-            task.Start();
         }
 
         public static void insertOrUpdate(QRCode qrCode)
@@ -66,14 +44,9 @@ namespace LockerApi.Services.Repositories
                     entity.ExpiresOnUTC = qrCode.ExpiresOnUTC;
                 }
                 else
-                {
                     dbContext.QRCodes.Add(qrCode);
-                    _insertCount++;
-                }
                 dbContext.SaveChanges();
             }
-            var task = new Task(cleanUpTable);
-            task.Start();
         }
     }
 }

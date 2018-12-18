@@ -2,7 +2,7 @@
 
 namespace LockerApi.Models
 {
-    public class GetPermissionListModel
+    public class PermissionListBindingModel
     {
         [StringLength(50)]
         [Required]
