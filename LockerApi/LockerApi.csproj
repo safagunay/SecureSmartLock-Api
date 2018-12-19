@@ -296,6 +296,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BindingModels\CheckPermissionBindingModel.cs" />
     <Compile Include="Models\BindingModels\DeletePermissionBindingModel.cs" />
+    <Compile Include="Models\DTOs\AcquiredPermissionDTO.cs" />
     <Compile Include="Models\DTOs\DevicePermissionDTO.cs" />
     <Compile Include="Models\BindingModels\GetPermissionListModel.cs" />
     <Compile Include="Models\BindingModels\RegisterDeviceBindingModel.cs" />

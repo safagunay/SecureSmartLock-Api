@@ -65,5 +65,15 @@ namespace LockerApi.Services
         {
             return DevicePermissionsRepository.GetByDeviceId(deviceId);
         }
+
+        public IEnumerable<DevicePermission> GetAcquiredDevicePermissionList(string userId)
+        {
+            return DevicePermissionsRepository.GetByUserId(userId);
+        }
+
+        public Device GetById(int device_Id)
+        {
+            return DeviceRepository.getById(device_Id);
+        }
     }
 }

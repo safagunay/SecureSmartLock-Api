@@ -114,6 +114,33 @@ namespace LockerApi.Controllers
             return Ok();
         }
 
+        //GET api/Device/AcquiredPermissionList
+        [Route("AcquiredPermissionList")]
+        public IHttpActionResult GetAcquiredPermissionList()
+        {
+            var userId = User.Identity.GetUserId();
+            var list = new List<AcquiredDevicePermissionDTO>();
+            foreach (var permission in _deviceService.GetAcquiredDevicePermissionList(userId))
+            {
+                if (DateService.isExpiredUTC(permission.ExpiresOnUTC))
+                    continue;
+                var email = UserManager.FindById(permission.Givenby_User_Id).Email;
+                var device = _deviceService.GetById(permission.Device_Id);
+                list.Add
+                    (
+                        new AcquiredDevicePermissionDTO()
+                        {
+                            Name = device.Name,
+                            DeviceCode = device.Code,
+                            GiverEmail = email,
+                            CreatedOnUTC = permission.CreatedOnUTC,
+                            ExpiresOnUTC = permission.ExpiresOnUTC
+                        }
+
+                    );
+            }
+            return Ok(list);
+        }
 
     }
 }
