@@ -22,6 +22,17 @@ namespace LockerApi.Services.Repositories
             }
         }
 
+        public static QRCode GetByHash(string qrCode)
+        {
+            if (qrCode == null)
+                return null;
+            using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            {
+                var hash = HashService.HashQRCode(qrCode);
+                return dbContext.QRCodes.Where(qr => qr.Hash == hash).SingleOrDefault();
+            }
+        }
+
         public static void insert(QRCode qrCode)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())

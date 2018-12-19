@@ -213,6 +213,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DeviceController_QRCode.cs" />
+    <Compile Include="Controllers\DeviceController_CheckPermission.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -242,8 +244,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\DeviceController.cs" />
-    <Compile Include="Controllers\DeviceController_1.cs" />
+    <Compile Include="Controllers\DeviceController_Device.cs" />
+    <Compile Include="Controllers\DeviceController_Permission.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DbContext\ApplicationDbContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -292,6 +294,7 @@
       <DependentUpon>201812161350110_DateColumnNamesAndTypesManuallyHandled.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BindingModels\CheckPermissionBindingModel.cs" />
     <Compile Include="Models\BindingModels\DeletePermissionBindingModel.cs" />
     <Compile Include="Models\DTOs\DevicePermissionDTO.cs" />
     <Compile Include="Models\BindingModels\GetPermissionListModel.cs" />

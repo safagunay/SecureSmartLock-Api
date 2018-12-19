@@ -32,5 +32,14 @@ namespace LockerApi.Services
                 !DateService.isExpiredUTC(qr.ExpiresOnUTC) && HashService.HashQRCode(qrCode) == qr.Hash :
                 false;
         }
+
+        public string GetUserId(string qrCode)
+        {
+            var QRCode = QRCodeRepository.GetByHash(qrCode);
+            if (QRCode == null || DateService.isExpiredUTC(QRCode.ExpiresOnUTC))
+                return null;
+            return QRCode.User_Id;
+
+        }
     }
 }

@@ -17,6 +17,12 @@ namespace LockerApi.Services
                 HashService.HashDeviceCode(code));
         }
 
+        public Device getBySecretHash(string secret)
+        {
+            return DeviceRepository.getBySecretHash(
+                HashService.HashDeviceSecret(secret));
+        }
+
         public void updateDeviceName(int deviceId, string name)
         {
             DeviceRepository.setName(deviceId, name);
@@ -34,6 +40,11 @@ namespace LockerApi.Services
         public void AddOrUpdatePermission(DevicePermission permission)
         {
             DevicePermissionsRepository.InsertOrUpdate(permission);
+        }
+
+        public DevicePermission GetPermission(string userId, int deviceId)
+        {
+            return DevicePermissionsRepository.GetByDeviceAndUserId(deviceId, userId);
         }
 
         public void AddPermissionRecord(DevicePermissionRecord record)
