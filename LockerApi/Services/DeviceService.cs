@@ -44,7 +44,11 @@ namespace LockerApi.Services
 
         public DevicePermission GetPermission(string userId, int deviceId)
         {
-            return DevicePermissionsRepository.GetByDeviceAndUserId(deviceId, userId);
+            var permission = DevicePermissionsRepository.GetByDeviceAndUserId(deviceId, userId);
+            if (permission == null || DateService.isExpiredUTC(permission.ExpiresOnUTC))
+                return null;
+            return permission;
+
         }
 
         public void AddPermissionRecord(DevicePermissionRecord record)
