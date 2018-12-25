@@ -117,8 +117,8 @@ namespace LockerApi.Controllers
                         if (item.User_Id != null)
                             email = UserManager.FindById(item.User_Id).Email;
 
-                        list.Add(string.Format("id={0,-20}, Name={1,-20}, Code={2,-20}, Email={3,-20}",
-                            item.Id, item.Name ?? defaultVal, item.Code ?? defaultVal, email));
+                        list.Add(string.Format("id={0,-20}, Name={1,-20}, Code={2,-20}, SecretHash={3,-20}, Email={4,-20}",
+                            item.Id, item.Name ?? defaultVal, item.Code ?? defaultVal, item.SecretKeyHash, email));
                     }
                 }
             }
