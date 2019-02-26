@@ -84,6 +84,7 @@ namespace LockerApi.Controllers
         }
 
         //POST api/Device/DeletePermission
+        [HttpPost]
         [Route("DeletePermission")]
         public IHttpActionResult DeletePermission(DeletePermissionBindingModel model)
         {
