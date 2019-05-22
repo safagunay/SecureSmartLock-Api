@@ -19,7 +19,7 @@ namespace LockerApi.Controllers
             return new QRCodeDTO()
             {
                 QRCode = qrCode,
-                DurationInSeconds = SettingsService.QRCodeDuration * 60,
+                DurationInSeconds = SettingsService.QRCodeDuration,
                 CreatedOnUTC = qrEntity.CreatedOnUTC,
                 ExpiresOnUTC = qrEntity.ExpiresOnUTC.Value
             };

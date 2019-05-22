@@ -7,10 +7,7 @@ namespace LockerApi.Admin
         [Required]
         public string Password { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = 10)]
-        public string DeviceCode { get; set; }
-        [Required]
-        [StringLength(50, MinimumLength = 10)]
-        public string DeviceSecret { get; set; }
+        [Range(1,10)]
+        public int Quantity { get; set; }
     }
 }

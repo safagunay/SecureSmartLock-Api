@@ -19,7 +19,7 @@ namespace LockerApi.Test
             string path = Path.Combine(mydocpath, filename);
 
             int id = DbQuery.AddNewDevice(deviceCode, deviceSecret);
-            string line = String.Format("id={0}, deviceCode={1}, deviceSecret={2}, Date={3}",
+            string line = string.Format("id={0}, deviceCode={1}, deviceSecret={2}, Date={3}",
                 id, deviceCode, deviceSecret, DateService.getCurrentUTC());
             using (StreamWriter outputFile = new StreamWriter(path, true))
             {
@@ -30,7 +30,7 @@ namespace LockerApi.Test
         }
         static void Main(string[] args)
         {
-            for (int i = 0; i < 47; i++)
+            for (int i = 0; i < 4; i++)
             {
                 AddNewDevice();
             }

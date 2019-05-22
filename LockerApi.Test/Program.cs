@@ -1,4 +1,4 @@
-using System;
+
 
 namespace LockerApi.Test
 {
@@ -6,11 +6,7 @@ namespace LockerApi.Test
     {
         static void Main(string[] args)
         {
-            var dtUtc = System.DateTime.UtcNow;
-            var dtNow = System.DateTime.Now;
-            Console.WriteLine(dtNow);
-            Console.WriteLine(dtUtc);
-            Console.ReadKey();
+            DeviceActivityLogServiceTest.Test();
         }
     }
 }

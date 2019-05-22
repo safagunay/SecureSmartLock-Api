@@ -9,8 +9,8 @@
         public const int ConfirmationTokenTableCleanUpPeriod = 50;
         //In numbers
         public const int DevicePermissionsTableCleanUpPeriod = 50;
-        //In Minutes
-        public const int QRCodeDuration = 1;
+        //In Seconds
+        public const int QRCodeDuration = 60;
         //In minutes
         public const int QRCodeTableCleanUpPeriod = 10;
     }

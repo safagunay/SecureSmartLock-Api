@@ -1,4 +1,5 @@
 ﻿using LockerApi.Admin;
+using LockerApi.Libraries;
 using LockerApi.Models;
 using LockerApi.Services;
 using Microsoft.AspNet.Identity;
@@ -32,7 +33,7 @@ namespace LockerApi.Controllers
         [Route("AddDevice")]
         public IHttpActionResult AddDevice(AddDeviceBindingModel model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || model.Quantity > 10)
             {
                 return BadRequest(ModelState);
             }
@@ -40,26 +41,31 @@ namespace LockerApi.Controllers
             {
                 using (ApplicationDbContext dbContext = new ApplicationDbContext())
                 {
-                    var device = new Device()
-                    {
-                        CodeHash = HashService.HashDeviceCode(model.DeviceCode),
-                        SecretKeyHash = HashService.HashDeviceSecret(model.DeviceSecret),
-                        CreatedOnUTC = DateService.getCurrentUTC(),
-                        IsDeleted = false
 
-                    };
-                    dbContext.Devices.Add(device);
+                    for(int i = 0; i<model.Quantity; i++)
+                    {
+                        var device = new Device()
+                        {
+                            CodeHash = HashService.HashDeviceCode(ShortGuid.NewGuid()),
+                            SecretKeyHash = HashService.HashDeviceSecret(ShortGuid.NewGuid()),
+                            CreatedOnUTC = DateService.getCurrentUTC(),
+                            IsDeleted = false
+
+                        };
+                        dbContext.Devices.Add(device);
+                    }
+                    
                     try
                     {
                         dbContext.SaveChanges();
                     }
                     catch
                     {
-                        ModelState.AddModelError("DbInsert", "DeviceCode and SecretCode must be unique.");
+                        ModelState.AddModelError("DbInsert", "Database Error!");
                         return BadRequest(ModelState);
                     }
 
-                    return Ok(device.Id);
+                    return Ok();
                 }
             }
             ModelState.AddModelError("Password", "Incorrect password.");
@@ -118,7 +124,7 @@ namespace LockerApi.Controllers
                             email = UserManager.FindById(item.User_Id).Email;
 
                         list.Add(string.Format("id={0,-20}, Name={1,-20}, Code={2,-20}, SecretHash={3,-20}, Email={4,-20}",
-                            item.Id, item.Name ?? defaultVal, item.Code ?? defaultVal, item.SecretKeyHash, email));
+                            item.Id, item.Name ?? defaultVal, item.CodeHash ?? defaultVal, item.SecretKeyHash, email));
                     }
                 }
             }

@@ -6,7 +6,7 @@ namespace LockerApi.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("LockerDbConnectionRemote", throwIfV1Schema: false)
+            : base("masterEntities", throwIfV1Schema: false)
         {
         }
 

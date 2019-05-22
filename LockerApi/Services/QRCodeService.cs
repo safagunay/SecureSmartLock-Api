@@ -12,11 +12,11 @@ namespace LockerApi.Services
         }
         public QRCode CreateQrCodeFor(string userId, string qrCode)
         {
-            var duration = SettingsService.QRCodeDuration;
+            var duration = SettingsService.QRCodeDuration - 10;
             var qrEntity = new QRCode()
             {
                 CreatedOnUTC = DateService.getCurrentUTC(),
-                ExpiresOnUTC = DateService.getCurrentUTC().AddMinutes(duration),
+                ExpiresOnUTC = DateService.getCurrentUTC().AddSeconds(duration),
                 Hash = HashService.HashQRCode(qrCode),
                 User_Id = userId
 
