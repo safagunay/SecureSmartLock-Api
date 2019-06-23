@@ -1,0 +1,68 @@
+﻿@model LockerApi.Models.ActivityLogViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Device Activity Logs Id:@Model.DeviceId</title>
+</head>
+<body>
+    @if (Model.DevFound)
+    {
+        <nav class="nav flex-column">
+            <a class="nav-link" href="#">Device Id: @Model.DeviceId</a>
+            <a class="nav-link" href="#">Device Name: @Model.DeviceName</a>
+            <a class="nav-link" href="#">Device Owner: @Model.DeviceOwnerEmail</a>
+        </nav>
+        if (Model.LogList.Count != 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Success</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int count = 0; }
+                    @foreach (var log in Model.LogList)
+                    {
+                        count++;
+                        <tr>
+                            <th scope="row">@count</th>
+                            <td>@log.TimeUTC</td>
+                            <td>@log.Email</td>
+                            <td>@log.IsSuccessful</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <nav class="nav flex-column">
+                <a class="nav-link" href="#">No Activity Log Found</a>
+            </nav>
+        }
+
+
+    }
+    else
+    {
+        <nav class="nav flex-column">
+            <a class="nav-link" href="#">No Device Found</a>
+        </nav>
+
+    }
+
+</body>
+</html>
