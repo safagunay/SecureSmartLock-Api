@@ -14,7 +14,7 @@ namespace LockerApi.Services
     public class DeviceActivityLogService
     {
         private static HttpClient _client = new HttpClient();
-        private const string baseURL = "http://23.101.70.73:5000";
+        private const string baseURL = "http://40.114.250.140:5000";
 
         public async Task<bool> addLog(int devId, DeviceActivityLogDTO log)
         {

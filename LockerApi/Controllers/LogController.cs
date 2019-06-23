@@ -30,13 +30,17 @@ namespace LockerApi.Controllers
             //prepare page model
             ActivityLogViewModel model = new ActivityLogViewModel();
             var dev = _deviceService.GetById(id);
-            if (dev != null)
+            if (dev != null && dev.User_Id != null)
             {
                 model.DeviceId = dev.Id;
                 model.DeviceName = dev.Name;
                 model.DevFound = true;
                 model.DeviceOwnerEmail = UserManager.GetEmail(dev.User_Id);
                 model.LogList = await _deviceActivityLogService.getLogs(dev.Id);
+            }
+            else
+            {
+                model.DevFound = false;
             }
 
             return View(model);
